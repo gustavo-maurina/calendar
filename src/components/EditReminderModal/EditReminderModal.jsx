@@ -11,7 +11,7 @@ import { theme } from "../../themes/theme";
 
 Modal.setAppElement("#root");
 
-const customStyles = { content: { ...DEFAULT_MODAL_STYLE } };
+const customStyles = { content: { ...DEFAULT_MODAL_STYLE, minWidth: "250px" } };
 
 const Form = styled.form`
   margin-top: 30px;
@@ -33,13 +33,13 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-export const AddReminderModal = ({ isOpen, closeModal, day }) => {
-  const { addReminder } = useReminders();
-  const [reminderDetails, setReminderDetails] = useState({});
+export const EditReminderModal = ({ isOpen, closeModal, day, reminder }) => {
+  const { editReminder } = useReminders();
+  const [reminderDetails, setReminderDetails] = useState(reminder);
 
-  const createReminder = (e) => {
+  const edit = (e) => {
     e.preventDefault();
-    addReminder({ ...reminderDetails, day });
+    editReminder(reminderDetails);
     closeModal();
   };
 
@@ -49,36 +49,65 @@ export const AddReminderModal = ({ isOpen, closeModal, day }) => {
       [e.target.name]: e.target.value,
     }));
 
+  const handleDateChange = (e) =>
+    setReminderDetails((prevState) => ({
+      ...prevState,
+      day: moment(e.target.value),
+    }));
+
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-      <h2>Add new reminder</h2>
-      <Form onSubmit={createReminder}>
+      <h2>Edit reminder</h2>
+      <Form onSubmit={edit}>
         <h3>Date: {day.format("MM/DD/y")}</h3>
 
         <label htmlFor="text">Reminder text</label>
         <textarea
           required
-          maxLength={30}
           name="text"
           type="text"
+          maxLength={30}
           placeholder="Type your reminder text..."
+          defaultValue={reminderDetails.text}
           onInput={handleInput}
         />
 
         <label htmlFor="time">Time</label>
-        <input type="time" name="time" onInput={handleInput} required />
+        <input
+          type="time"
+          name="time"
+          onInput={handleInput}
+          defaultValue={reminderDetails.time}
+          required
+        />
+
+        <label htmlFor="date">Date</label>
+        <input
+          type="date"
+          name="day"
+          onInput={handleDateChange}
+          defaultValue={reminderDetails.day.format("y-MM-DD")}
+          required
+        />
 
         <label htmlFor="city">City</label>
-        <input type="text" name="city" onInput={handleInput} required />
+        <input
+          type="text"
+          name="city"
+          onInput={handleInput}
+          defaultValue={reminderDetails.city}
+          required
+        />
 
-        <SubmitButton type="submit">Add</SubmitButton>
+        <SubmitButton type="submit">Edit</SubmitButton>
       </Form>
     </Modal>
   );
 };
 
-AddReminderModal.propTypes = {
+EditReminderModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  reminder: PropTypes.object.isRequired,
   day: PropTypes.instanceOf(moment),
 };

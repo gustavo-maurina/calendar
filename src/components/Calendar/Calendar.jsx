@@ -4,9 +4,11 @@ import { useCalendar } from "../../context/CalendarContext";
 import { CalendarWeekdayLabels } from "../CalendarWeekdayLabels";
 
 const Container = styled.div`
-  margin: auto;
   height: 100vh;
   display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: auto;
   align-items: center;
   justify-content: center;
 `;
@@ -23,6 +25,10 @@ export const Calendar = () => {
 
   return (
     <Container>
+      <h4>
+        Click on the days to add reminders! You can get details and edit them
+        too!
+      </h4>
       <div>
         <CalendarWeekdayLabels />
         <CalendarGrid>{calendar}</CalendarGrid>
