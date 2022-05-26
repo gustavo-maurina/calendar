@@ -1,0 +1,1 @@
+export { ReminderDetailsModal } from "./ReminderDetails";
