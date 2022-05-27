@@ -60,3 +60,7 @@ The steps to add a reminder and editing it are:
 ## Flexible month / year
 
 I began to implement it, but stopped because of the API limitations. I tried to clean it up but there might still be some residue of this logic.
+
+## API key
+
+It's hardcoded. I created a new dump account, therefore, security of the key is not an issue in this particular case and I chose to avoid the overhead of storing and accessing it with a secure approach. 
