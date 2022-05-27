@@ -3,7 +3,7 @@ import { memo, useState } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-import { getDayContext } from "../../utils/getDayProps";
+import { getDayContext } from "../../utils/getDayContext";
 import { AddReminderModal } from "../AddReminderModal/AddReminderModal";
 import { RemindersContainer } from "../RemindersContainer";
 import { DayContainer, DayText, TodayText } from "./styles";

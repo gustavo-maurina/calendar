@@ -12,6 +12,7 @@ export function getCalendarDays(date) {
 
   while (currentDay.isBefore(lastDay, "day")) {
     const nextDay = currentDay.add(1, "day").clone();
+
     grid.push(<CalendarDay dayInstance={nextDay} key={key} />);
     key++;
   }
