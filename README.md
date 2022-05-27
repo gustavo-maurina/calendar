@@ -44,7 +44,7 @@ The steps to add a reminder and editing it are:
 
 ### Weather on reminder details
 
-- I had a hard time finding an API that with the behavior that I dreamed with on it's free tier (fetch with location string query and able to retrieve data from the future and past).
+- I had a hard time finding an API that has the behavior that I dreamed with on it's free tier (fetch with location string query and able to retrieve data from the future and past with no restritions on amout of days).
 
 - Requests to the API are not going to work over HTTPS, because of my free tier. It shouldn't be a problem in `localhost`.
 
