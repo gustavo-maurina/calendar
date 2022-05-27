@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
 import { useReminders } from "../../context/RemindersContext";
-import { theme } from "../../themes/theme";
+import { Button } from "../shared/Button";
 
 Modal.setAppElement("#root");
 
@@ -22,15 +22,6 @@ const Form = styled.form`
     font-size: 16px;
     font-weight: bold;
   }
-`;
-
-const SubmitButton = styled.button`
-  border: none;
-  background-color: ${theme.labelBgColor};
-  color: white;
-  border-radius: 5px;
-  height: 25px;
-  cursor: pointer;
 `;
 
 export const EditReminderModal = ({ isOpen, closeModal, day, reminder }) => {
@@ -99,7 +90,7 @@ export const EditReminderModal = ({ isOpen, closeModal, day, reminder }) => {
           required
         />
 
-        <SubmitButton type="submit">Edit</SubmitButton>
+        <Button type="submit">Edit</Button>
       </Form>
     </Modal>
   );

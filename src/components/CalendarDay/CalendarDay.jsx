@@ -1,5 +1,8 @@
 import { memo, useState } from "react";
 
+import moment from "moment";
+import PropTypes from "prop-types";
+
 import { getDayContext } from "../../utils/getDayProps";
 import { AddReminderModal } from "../AddReminderModal/AddReminderModal";
 import { RemindersContainer } from "../RemindersContainer";
@@ -36,3 +39,7 @@ const CalendarDayComponent = ({ dayInstance }) => {
 };
 
 export const CalendarDay = memo(CalendarDayComponent);
+
+CalendarDay.propTypes = {
+  dayInstance: PropTypes.instanceOf(moment),
+};

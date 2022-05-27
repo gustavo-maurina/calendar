@@ -1,9 +1,11 @@
 import Modal from "react-modal";
 
+import moment from "moment";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
-import { theme } from "../../themes/theme";
+import { Button } from "../shared/Button";
 
 Modal.setAppElement("#root");
 
@@ -23,13 +25,6 @@ const RemindersList = styled.ul`
   }
 `;
 
-const DetailsButton = styled.button`
-  border: none;
-  background-color: ${theme.labelBgColor};
-  color: white;
-  border-radius: 5px;
-`;
-
 export const RemindersListModal = ({ isOpen, closeModal, reminders, day }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
@@ -37,10 +32,17 @@ export const RemindersListModal = ({ isOpen, closeModal, reminders, day }) => {
       <RemindersList>
         {reminders.map((reminder) => (
           <li>
-            {reminder.text} <DetailsButton>Details</DetailsButton>
+            {reminder.text} <Button>Details</Button>
           </li>
         ))}
       </RemindersList>
     </Modal>
   );
+};
+
+RemindersList.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reminder: PropTypes.object.isRequired,
+  day: PropTypes.instanceOf(moment),
 };

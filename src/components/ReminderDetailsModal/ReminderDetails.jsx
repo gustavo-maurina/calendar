@@ -1,26 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "react-modal";
 
-import styled from "styled-components";
+import moment from "moment";
+import PropTypes from "prop-types";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
-import { theme } from "../../themes/theme";
+import { getWeather } from "../../services/getWeather";
 import { EditReminderModal } from "../EditReminderModal/EditReminderModal";
+import { Button } from "../shared/Button";
 
 const modalStyles = { content: { ...DEFAULT_MODAL_STYLE } };
 
-const EditButton = styled.button`
-  margin-top: 20px;
-  border: none;
-  height: 30px;
-  background-color: ${theme.labelBgColor};
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
 export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [weatherForecast, setWeatherForecast] = useState();
+
+  useEffect(() => {
+    if (isOpen && !weatherForecast) fetchWeatherForecast();
+
+    async function fetchWeatherForecast() {
+      const formattedDate = moment(reminder.day).format("yyyy-MM-d");
+      const req = await getWeather(reminder.city, formattedDate);
+      const forecast = req.data.days[0];
+      setWeatherForecast(forecast);
+    }
+  }, [isOpen, reminder, weatherForecast]);
 
   const openEditModal = () => {
     closeModal();
@@ -37,7 +41,8 @@ export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
           <strong>Date</strong>: {reminder.day.format("MM/DD/y")}
         </p>
         <p>
-          <strong>Time</strong>: {reminder.time}
+          <strong>Time</strong>:{" "}
+          {moment(reminder.time, "HH:mm").format("h:mm A")}
         </p>
         <p>
           <strong>Text</strong>: {reminder.text}
@@ -45,9 +50,11 @@ export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
         <p>
           <strong>City</strong>: {reminder.city}
         </p>
-
-        <EditButton onClick={openEditModal}>Edit reminder</EditButton>
-        <EditButton onClick={openEditModal}>Edit reminder</EditButton>
+        <p>
+          <strong>Weather</strong>: {weatherForecast.temp}
+        </p>
+        <br />
+        <Button onClick={openEditModal}>Edit reminder</Button>
       </Modal>
 
       <EditReminderModal
@@ -58,4 +65,10 @@ export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
       />
     </>
   );
+};
+
+EditReminderModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reminder: PropTypes.object.isRequired,
 };

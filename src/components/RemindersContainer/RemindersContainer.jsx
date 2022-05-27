@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import moment from "moment";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { useReminders } from "../../context/RemindersContext";
@@ -69,4 +70,8 @@ export const RemindersContainer = ({ dayInstance }) => {
       />
     </>
   );
+};
+
+RemindersContainer.propTypes = {
+  dayInstance: PropTypes.instanceOf(moment),
 };

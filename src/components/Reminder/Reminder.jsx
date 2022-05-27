@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { theme } from "../../themes/theme";
@@ -40,4 +41,8 @@ export const Reminder = ({ reminder }) => {
       />
     </>
   );
+};
+
+Reminder.propTypes = {
+  reminder: PropTypes.object,
 };

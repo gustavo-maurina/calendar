@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
 import { useReminders } from "../../context/RemindersContext";
-import { theme } from "../../themes/theme";
+import { Button } from "../shared/Button";
 
 Modal.setAppElement("#root");
 
@@ -22,15 +22,6 @@ const Form = styled.form`
     font-size: 16px;
     font-weight: bold;
   }
-`;
-
-const SubmitButton = styled.button`
-  border: none;
-  background-color: ${theme.labelBgColor};
-  color: white;
-  border-radius: 5px;
-  height: 25px;
-  cursor: pointer;
 `;
 
 export const AddReminderModal = ({ isOpen, closeModal, day }) => {
@@ -71,7 +62,7 @@ export const AddReminderModal = ({ isOpen, closeModal, day }) => {
         <label htmlFor="city">City</label>
         <input type="text" name="city" onInput={handleInput} required />
 
-        <SubmitButton type="submit">Add</SubmitButton>
+        <Button type="submit">Add</Button>
       </Form>
     </Modal>
   );
