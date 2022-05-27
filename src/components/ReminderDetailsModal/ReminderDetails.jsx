@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
 import { useReminders } from "../../context/RemindersContext";
+import { isDayOnNext7Days } from "../../utils/isDayOnNext7Days";
 import { EditReminderModal } from "../EditReminderModal/EditReminderModal";
 import { ReminderWeather } from "../ReminderWeather";
 import { Button } from "../shared/Button";
@@ -25,13 +26,7 @@ export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
 
   useEffect(() => {
     if (isWithinOneWeek === undefined) {
-      const reminderDay = moment(reminder.day);
-      const next7days = moment().add(7, "day");
-      const yesterday = moment().subtract(1, "day");
-      const isValid =
-        reminderDay.isBefore(next7days) && reminderDay.isAfter(yesterday);
-
-      if (isValid) return setIsWithinOneWeek(true);
+      if (isDayOnNext7Days(reminder.day)) return setIsWithinOneWeek(true);
       setIsWithinOneWeek(false);
     }
   }, [reminder.day, isWithinOneWeek]);
