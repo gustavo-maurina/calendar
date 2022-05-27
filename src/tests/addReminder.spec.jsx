@@ -20,6 +20,7 @@ describe("Add reminder operation", () => {
     userEvent.click(calendarDay);
     expect(queryByTestId("addReminderModal")).toBeInTheDocument();
 
+    // should find all inputs and submit button
     const reminderInput = getByLabelText("Reminder text");
     const timeInput = getByLabelText("Time");
     const cityInput = getByLabelText("City");
