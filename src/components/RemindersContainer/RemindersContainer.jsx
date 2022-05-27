@@ -62,12 +62,14 @@ export const RemindersContainer = ({ dayInstance }) => {
         See all reminders ({numberOfReminders})
       </TooManyRemindersChip>
 
-      <RemindersListModal
-        isOpen={isListModalOpen}
-        closeModal={closeListModal}
-        reminders={remindersOfTheDay}
-        day={day}
-      />
+      {isListModalOpen && (
+        <RemindersListModal
+          isOpen={isListModalOpen}
+          closeModal={closeListModal}
+          reminders={remindersOfTheDay}
+          day={day}
+        />
+      )}
     </>
   );
 };

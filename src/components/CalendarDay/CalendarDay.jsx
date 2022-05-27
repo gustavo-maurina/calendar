@@ -20,7 +20,11 @@ const CalendarDayComponent = ({ dayInstance }) => {
 
   return (
     <>
-      <DayContainer isWeekend={isWeekend} onClick={openAddReminderModal}>
+      <DayContainer
+        data-testid="calendarDay"
+        isWeekend={isWeekend}
+        onClick={openAddReminderModal}
+      >
         <DayText isWeekend={isWeekend} fromCurrentMonth={isFromCurrentMonth}>
           {day.format("D")}
           {isToday && <TodayText>Today</TodayText>}
@@ -29,11 +33,13 @@ const CalendarDayComponent = ({ dayInstance }) => {
         <RemindersContainer dayInstance={dayInstance} />
       </DayContainer>
 
-      <AddReminderModal
-        isOpen={modalOpened}
-        closeModal={closeModal}
-        day={dayInstance}
-      />
+      {modalOpened && (
+        <AddReminderModal
+          isOpen={modalOpened}
+          closeModal={closeModal}
+          day={dayInstance}
+        />
+      )}
     </>
   );
 };

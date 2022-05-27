@@ -24,11 +24,7 @@ const Container = styled.div`
 export const Reminder = ({ reminder }) => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
-  const openDetails = (e) => {
-    setIsDetailsOpen(true);
-    // e.nativeEvent.stopImmediatePropagation();
-  };
-
+  const openDetails = () => setIsDetailsOpen(true);
   const closeModal = () => setIsDetailsOpen(false);
 
   return (

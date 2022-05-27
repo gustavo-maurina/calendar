@@ -3,34 +3,50 @@ import Modal from "react-modal";
 
 import moment from "moment";
 import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
-import { getWeather } from "../../services/getWeather";
+import { useReminders } from "../../context/RemindersContext";
 import { EditReminderModal } from "../EditReminderModal/EditReminderModal";
+import { ReminderWeather } from "../ReminderWeather";
 import { Button } from "../shared/Button";
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const modalStyles = { content: { ...DEFAULT_MODAL_STYLE } };
 
 export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
+  const { removeReminder } = useReminders();
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [weatherForecast, setWeatherForecast] = useState();
+  const [isWithinOneWeek, setIsWithinOneWeek] = useState();
 
   useEffect(() => {
-    if (isOpen && !weatherForecast) fetchWeatherForecast();
+    if (isWithinOneWeek === undefined) {
+      const reminderDay = moment(reminder.day);
+      const next7days = moment().add(7, "day");
+      const yesterday = moment().subtract(1, "day");
+      const isValid =
+        reminderDay.isBefore(next7days) && reminderDay.isAfter(yesterday);
 
-    async function fetchWeatherForecast() {
-      const formattedDate = moment(reminder.day).format("yyyy-MM-d");
-      const req = await getWeather(reminder.city, formattedDate);
-      const forecast = req.data.days[0];
-      setWeatherForecast(forecast);
+      if (isValid) return setIsWithinOneWeek(true);
+      setIsWithinOneWeek(false);
     }
-  }, [isOpen, reminder, weatherForecast]);
+  }, [reminder.day, isWithinOneWeek]);
+
+  const closeEditModal = () => setEditModalOpen(false);
 
   const openEditModal = () => {
     closeModal();
     setEditModalOpen(true);
   };
-  const closeEditModal = () => setEditModalOpen(false);
+
+  const deleteReminder = () => {
+    removeReminder(reminder.id);
+    setEditModalOpen(false);
+  };
 
   return (
     <>
@@ -51,10 +67,21 @@ export const ReminderDetailsModal = ({ reminder, isOpen, closeModal }) => {
           <strong>City</strong>: {reminder.city}
         </p>
         <p>
-          <strong>Weather</strong>: {weatherForecast.temp}
+          <strong>Weather</strong>:{" "}
+          {isOpen && (
+            <ReminderWeather
+              city={reminder.city}
+              isWithinOneWeek={isWithinOneWeek}
+            />
+          )}
         </p>
         <br />
-        <Button onClick={openEditModal}>Edit reminder</Button>
+        <ButtonsContainer>
+          <Button onClick={openEditModal}>Edit reminder</Button>
+          <Button color="#ff6060" onClick={deleteReminder}>
+            Remove reminder
+          </Button>
+        </ButtonsContainer>
       </Modal>
 
       <EditReminderModal

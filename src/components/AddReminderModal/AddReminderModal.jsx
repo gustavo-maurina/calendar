@@ -9,7 +9,7 @@ import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
 import { useReminders } from "../../context/RemindersContext";
 import { Button } from "../shared/Button";
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root");
 
 const customStyles = { content: { ...DEFAULT_MODAL_STYLE } };
 
@@ -41,29 +41,36 @@ export const AddReminderModal = ({ isOpen, closeModal, day }) => {
     }));
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={closeModal} style={customStyles}>
-      <h2>Add new reminder</h2>
-      <Form onSubmit={createReminder}>
-        <h3>Date: {day.format("MM/DD/y")}</h3>
+    <Modal
+      ariaHideApp={!process.env.NODE_ENV === "test"}
+      isOpen={isOpen}
+      onRequestClose={closeModal}
+      style={customStyles}
+    >
+      <div data-testid="addReminderModal">
+        <h2>Add new reminder</h2>
+        <Form onSubmit={createReminder}>
+          <h3>Date: {day.format("MM/DD/y")}</h3>
 
-        <label htmlFor="text">Reminder text</label>
-        <textarea
-          required
-          maxLength={30}
-          name="text"
-          type="text"
-          placeholder="Type your reminder text..."
-          onInput={handleInput}
-        />
+          <label htmlFor="text">Reminder text</label>
+          <textarea
+            required
+            maxLength={30}
+            name="text"
+            type="text"
+            placeholder="Type your reminder text..."
+            onInput={handleInput}
+          />
 
-        <label htmlFor="time">Time</label>
-        <input type="time" name="time" onInput={handleInput} required />
+          <label htmlFor="time">Time</label>
+          <input type="time" name="time" onInput={handleInput} required />
 
-        <label htmlFor="city">City</label>
-        <input type="text" name="city" onInput={handleInput} required />
+          <label htmlFor="city">City</label>
+          <input type="text" name="city" onInput={handleInput} required />
 
-        <Button type="submit">Add</Button>
-      </Form>
+          <Button type="submit">Add</Button>
+        </Form>
+      </div>
     </Modal>
   );
 };
