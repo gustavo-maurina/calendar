@@ -8,7 +8,6 @@ import { getWeather } from "../../services/getWeather";
 export const ReminderWeather = ({ city, isWithinOneWeek }) => {
   const [error, setError] = useState(false);
   const [temperature, setTemperature] = useState();
-  const formattedTemperature = () => Math.round(temperature) + " ºF";
 
   useEffect(() => {
     if (!temperature && isWithinOneWeek) fetchTemperature();
@@ -25,19 +24,18 @@ export const ReminderWeather = ({ city, isWithinOneWeek }) => {
     }
   }, [city, temperature, isWithinOneWeek]);
 
+  const formattedTemperature = () => Math.round(temperature) + " ºF";
+
   if (!isWithinOneWeek)
-    return (
-      <>Weather is only available for dates up to 7 days after current date</>
-    );
+    return "Weather is only available for dates up to 7 days after current date";
 
-  if (error.hasError) {
-    if (error.motive === "city")
-      return <>Couldn't find a location that matches "City" field</>;
-    if (error.motive === "weather")
-      return <>Couldn't find weather information</>;
-  }
+  if (error.hasError && error.motive === "city")
+    return 'Couldn\'t find a location that matches "City" field';
 
-  return <>{temperature ? formattedTemperature() : "Retrieving weather..."}</>;
+  if (error.hasError && error.motive === "weather")
+    return "Couldn't find weather information";
+
+  return temperature ? formattedTemperature() : "Retrieving weather...";
 };
 
 ReminderWeather.propTypes = {
