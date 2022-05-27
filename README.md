@@ -46,6 +46,8 @@ The steps to add a reminder and editing it are:
 
 - I had a hard time finding an API that with the behavior that I dreamed with on it's free tier (fetch with location string query and able to retrieve data from the future and past).
 
+- Requests to the API are not going to work over HTTPS, because of my free tier. It shouldn't be a problem in `localhost`.
+
 - Because of the above, I implemented the weather information on the Reminder Details, but it has a few restrictions in order for it work, which are:
 
   1. Date of reminder can't be before current (real-world) date.
@@ -63,4 +65,4 @@ I began to implement it, but stopped because of the API limitations. I tried to 
 
 ## API key
 
-It's hardcoded. I created a new dump account, therefore, security of the key is not an issue in this particular case and I chose to avoid the overhead of storing and accessing it with a secure approach. 
+It's hardcoded. I created a new dump account, therefore, security of the key is not an issue in this particular case and I chose to avoid the overhead of storing and accessing it with a secure approach.
