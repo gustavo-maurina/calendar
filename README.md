@@ -28,13 +28,13 @@ yarn test
 
 The steps to add a reminder and editing it are:
 
-1.  click on the day you wish to add a reminder to
+1. click on the day you wish to add a reminder to
 
-2.  insert the information of the reminder as prompted
+2. insert the information of the reminder as prompted
 
-3.  your reminder will appear as a _chip-like_ element on the day that you selected
+3. your reminder will appear as a _chip-like_ element on the day that you selected
 
-4.  to edit or remove the reminder, click on the reminder and you will have both options
+4. to edit or remove the reminder, click on the reminder and you will have both options
 
 ## Caveats
 
