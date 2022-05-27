@@ -29,7 +29,9 @@ export const Reminder = ({ reminder }) => {
 
   return (
     <>
-      <Container onClick={openDetails}>{reminder.text}</Container>
+      <Container data-testid="reminder" onClick={openDetails}>
+        {reminder.text}
+      </Container>
       <ReminderDetailsModal
         isOpen={isDetailsOpen}
         reminder={reminder}

@@ -55,6 +55,7 @@ export const AddReminderModal = ({ isOpen, closeModal, day }) => {
           <label htmlFor="text">Reminder text</label>
           <textarea
             required
+            id="text"
             maxLength={30}
             name="text"
             type="text"
@@ -63,10 +64,22 @@ export const AddReminderModal = ({ isOpen, closeModal, day }) => {
           />
 
           <label htmlFor="time">Time</label>
-          <input type="time" name="time" onInput={handleInput} required />
+          <input
+            id="time"
+            type="time"
+            name="time"
+            onInput={handleInput}
+            required
+          />
 
           <label htmlFor="city">City</label>
-          <input type="text" name="city" onInput={handleInput} required />
+          <input
+            id="city"
+            type="text"
+            name="city"
+            onInput={handleInput}
+            required
+          />
 
           <Button type="submit">Add</Button>
         </Form>
