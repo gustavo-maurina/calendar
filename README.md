@@ -1,4 +1,4 @@
-# React Challenge
+# React Calendar
 
 ## How to deploy
 
