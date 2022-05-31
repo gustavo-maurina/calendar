@@ -1,16 +1,19 @@
 import { WEATHER_API } from "./api";
 
 /**
- * Returns weather forecast for the next 5 days
+ * Returns weather forecast for given coordinates
  *
- * @param {String} city city to fetch weather forecast
- * @param {String} date day to start forecast search
+ * @param {Number} lat latitude
+ * @param {Number} lon longitude
  */
-export async function getWeather(city, date) {
+export async function getWeather(lat, lon) {
   try {
-    const req = await WEATHER_API.get(`${city}/${date}`);
-    return req.data;
+    const req = await WEATHER_API.get(`/data/2.5/onecall`, {
+      params: { lat, lon },
+    });
+
+    return req.data.daily[0].temp.day;
   } catch (err) {
-    console.log(err);
+    return { error: err };
   }
 }

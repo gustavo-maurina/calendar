@@ -9,7 +9,7 @@ import { DEFAULT_MODAL_STYLE } from "../../constants/defaultModalStyle";
 import { useReminders } from "../../context/RemindersContext";
 import { Button } from "../shared/Button";
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV !== "test") Modal.setAppElement("#root");
 
 const customStyles = { content: { ...DEFAULT_MODAL_STYLE, minWidth: "250px" } };
 

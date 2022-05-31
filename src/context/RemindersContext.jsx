@@ -7,12 +7,12 @@ const RemindersContext = createContext(null);
 export const RemindersProvider = ({ children }) => {
   const [reminders, setReminders] = useState([]);
 
-  const addReminder = (reminder) => {
+  function addReminder(reminder) {
     const newReminder = { id: randomUUID(), ...reminder };
     setReminders((prevState) => [...prevState, newReminder]);
-  };
+  }
 
-  const editReminder = (newReminder) => {
+  function editReminder(newReminder) {
     const reminderToEdit = reminders.find(
       (reminder) => reminder.id === newReminder.id
     );
@@ -20,10 +20,22 @@ export const RemindersProvider = ({ children }) => {
     const remindersAuxArray = reminders;
     remindersAuxArray.splice(reminders.indexOf(reminderToEdit), 1, newReminder);
     setReminders([...remindersAuxArray]);
-  };
+  }
+
+  function removeReminder(reminderId) {
+    const reminderToRemove = reminders.find(
+      (reminder) => reminder.id === reminderId
+    );
+
+    const remindersAuxArray = reminders;
+    remindersAuxArray.splice(reminders.indexOf(reminderToRemove), 1);
+    setReminders([...remindersAuxArray]);
+  }
 
   return (
-    <RemindersContext.Provider value={{ reminders, addReminder, editReminder }}>
+    <RemindersContext.Provider
+      value={{ reminders, addReminder, editReminder, removeReminder }}
+    >
       {children}
     </RemindersContext.Provider>
   );

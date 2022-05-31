@@ -3,7 +3,7 @@ import { memo, useState } from "react";
 import moment from "moment";
 import PropTypes from "prop-types";
 
-import { getDayContext } from "../../utils/getDayProps";
+import { getDayContext } from "../../utils/getDayContext";
 import { AddReminderModal } from "../AddReminderModal/AddReminderModal";
 import { RemindersContainer } from "../RemindersContainer";
 import { DayContainer, DayText, TodayText } from "./styles";
@@ -20,7 +20,11 @@ const CalendarDayComponent = ({ dayInstance }) => {
 
   return (
     <>
-      <DayContainer isWeekend={isWeekend} onClick={openAddReminderModal}>
+      <DayContainer
+        data-testid="calendarDay"
+        isWeekend={isWeekend}
+        onClick={openAddReminderModal}
+      >
         <DayText isWeekend={isWeekend} fromCurrentMonth={isFromCurrentMonth}>
           {day.format("D")}
           {isToday && <TodayText>Today</TodayText>}
@@ -29,11 +33,13 @@ const CalendarDayComponent = ({ dayInstance }) => {
         <RemindersContainer dayInstance={dayInstance} />
       </DayContainer>
 
-      <AddReminderModal
-        isOpen={modalOpened}
-        closeModal={closeModal}
-        day={dayInstance}
-      />
+      {modalOpened && (
+        <AddReminderModal
+          isOpen={modalOpened}
+          closeModal={closeModal}
+          day={dayInstance}
+        />
+      )}
     </>
   );
 };
